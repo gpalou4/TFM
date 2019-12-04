@@ -5,8 +5,11 @@ rm(list=ls())
 library(oligo)
 library(GEOquery)
 
+### DOWNLOAD DATA ###
+
 # Set working directory and GEO ID
-setwd("/home/guille/Guille/MBHS/2Y/TFM/QC/gene_expression_array/")
+current_directory = "/home/guille/Guille/MBHS/2Y/TFM/QC/gene_expression_array/"
+setwd(current_directory)
 GEO_ID = "GSE124026"
 
 # Download raw data from GEO database in the current directory
@@ -32,6 +35,8 @@ celfiles_list
 data <- getGEO(GEO_ID, GSEMatrix=TRUE)
 phenodata <- phenoData(data$GSE124026_series_matrix.txt.gz)
 
+### QUALITY CONTROL ###
+
 # Set working directory where CEL files are stored
 setwd(path_to_GEO_raw_data)
 
@@ -39,20 +44,58 @@ setwd(path_to_GEO_raw_data)
 cel_files <- read.celfiles(filenames=celfiles_list, phenoData=phenodata)
 cel_files
 
+# imagenes
 
-prueba <- read.celfiles(filenames=celfiles_list)
-
+oligo::image(cel_files)
 
 ## MA-plot
 
-xl <- c(2.8, 4)
-yl <- c(-1, 1)
-MAplot(cel_files[,1:3], pairs=TRUE, ylim=yl, xlim=xl)
+# Important to take into account the X and Y scales, it should be more or less
+# the same in all samples
 
+# Save the MA plots in a pdf in the working directory
+setwd(current_directory)
+pdf("MA_plots")
+MAplot(cel_files)
+dev.off()
 
 ## Box-plot
 
-boxplot(cel_files, which="all", transfo=log2, nsample=10000)
+# HACER PLOT POR BATCHES (1200 INDV)
+
+# Level of summarization? probeset, core, full or extended?
+oligo::boxplot(cel_files, target = "probeset", transfo=log2, nsample=10000)
+showMethods(boxplot, class = "FeatureSet", includeDefs=T)
+
+## Density plot
+
+# hacer bloques de 20 para visualziar bien los colores y poder descartar el malo..
+oligo::hist(cel_files, target = "probeset")
+
+## Probe Level Models: RLE y NUSE
+#si RLE da mal, en NUSE da peor, y descartar
+
+fit_PLM <- fitProbeLevelModel(cel_files)
+
+# Relative Log Expression (RLE) boxplot
+RLE(fit_PLM)
+
+# Normalized Unscaled Standard Errors (NUSE)
+# Everything above 1 is bad quality samples
+
+NUSE(fit_PLM)
+
+### PRE-PROCESSING ###
+
+# Background substraction, normalization and summarization by RMA method
+## preprocessing step by spte or simultaneously with rma()
+# me transforma a ExpressionSet
+
+cel_files_norm <- rma(cel_files)
+
+
+
+
 
 
 
