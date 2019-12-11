@@ -43,7 +43,8 @@ phenodata <- phenoData(data$`GSE103008-GPL6244_series_matrix.txt.gz`)
 setwd(path_to_GEO_raw_data)
 
 # Read CEL files + add metadata from OLIGO package
-cel_files <- read.celfiles(filenames=celfiles_list, phenoData=phenodata)
+#cel_files <- read.celfiles(filenames=celfiles_list, phenoData=phenodata)
+cel_files <- read.celfiles(filenames=celfiles_list)
 cel_files
 
 # imagenes
@@ -93,7 +94,21 @@ NUSE(fit_PLM)
 ## preprocessing step by spte or simultaneously with rma()
 # me transforma a ExpressionSet
 
-cel_files_norm <- rma(cel_files)
+cel_files_norm <- rma(cel_files, background = TRUE, normalize = TRUE, target = "core")
+# One of the following values:  ’core’, ’full’, ’extended’, ’probeset’.  
+# Used onlywith Gene ST and Exon ST designs. difference?
+
+#The ’rma’method allows for two targets:  ’probeset’ (target=’probeset’) and ’transcript’ 
+#(target=’core’,  target=’full’, target=’extended’)
+
+## Feature's annotation metadata
+# doesn't annotate anything :(
+#library(pd.huex.1.0.st.v2)
+library(pd.hugene.1.0.st.v1)
+
+featureData(cel_files_norm) <- getNetAffx(cel_files_norm, type = "transcript")
+cel_files_norm
+fData(cel_files_norm)[1:5,1:7]
 
 ### OBTAIN MATRIX DATA ###
 
