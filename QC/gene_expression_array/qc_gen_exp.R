@@ -10,7 +10,8 @@ library(GEOquery)
 # Set working directory and GEO ID
 current_directory = "/home/guille/Guille/MBHS/2Y/TFM/QC/gene_expression_array/"
 setwd(current_directory)
-GEO_ID = "GSE124026"
+GEO_ID = "GSE103008"
+# old GEO_ID = "GSE124026"
 
 # Download raw data from GEO database in the current directory
 getGEOSuppFiles(GEO_ID, baseDir=getwd())
@@ -18,11 +19,12 @@ getGEOSuppFiles(GEO_ID, baseDir=getwd())
 # Untar the raw data
 path_to_GEO_folder = paste(getwd(), "/", GEO_ID, sep = "")
 path_to_GEO_raw_tar_data = paste(path_to_GEO_folder, "/", GEO_ID, "_RAW.tar", sep = "")
-untar(path_to_GEO_raw_tar_data, exdir = path_to_GEO_folder)
+path_to_GEO_raw_data = paste(path_to_GEO_folder, "/", GEO_ID, "_RAW", sep= "")
+untar(path_to_GEO_raw_tar_data, exdir = path_to_GEO_raw_data)
 #dir.create(path_to_download)
 
 # Obtain a vector of CEL files names 
-path_to_GEO_raw_data = paste(path_to_GEO_folder, "/", GEO_ID, "_RAW", sep= "")
+
 celfiles_list = list.files(path = path_to_GEO_raw_data, pattern = ".CEL.*", all.files =
                         FALSE, full.names = FALSE, recursive = FALSE, ignore.case = FALSE)
 celfiles_list
@@ -33,7 +35,7 @@ celfiles_list
 #setwd("/home/guille/Guille/MBHS/2Y/TFM/QC/gene_expression_array/GSE124026/prueba")
 
 data <- getGEO(GEO_ID, GSEMatrix=TRUE)
-phenodata <- phenoData(data$GSE124026_series_matrix.txt.gz)
+phenodata <- phenoData(data$`GSE103008-GPL6244_series_matrix.txt.gz`)
 
 ### QUALITY CONTROL ###
 
@@ -55,7 +57,7 @@ oligo::image(cel_files)
 
 # Save the MA plots in a pdf in the working directory
 setwd(current_directory)
-pdf("MA_plots")
+pdf("MA_plots.pdf")
 MAplot(cel_files)
 dev.off()
 
@@ -93,6 +95,17 @@ NUSE(fit_PLM)
 
 cel_files_norm <- rma(cel_files)
 
+### OBTAIN MATRIX DATA ###
+
+assayDataElement(cel_files_norm,'exprs')[1:5,1:5]
+# alternative
+exprs(cel_files_norm)[1:5,1:5]
+
+gen_exp_norm <- assayDataElement(cel_files_norm,'exprs')
+
+### EXPORT MATRIX DATA ###
+
+save(gen_exp_norm, file=paste(path_to_GEO_folder,"/","gen_expr_norm.Rdata", sep = ""))
 
 
 
