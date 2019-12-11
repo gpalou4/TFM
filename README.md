@@ -1,4 +1,12 @@
 # TFM
-Master Thesis Project at IMIM (Cardiovascular Epidemiology and Genetics group)
+This is the repository for the Master Thesis Project of the Master in Bioinformatics for Health Sciences (Universitat Pompeu Fabra).
 
-This is a README file.
+at IMIM (Cardiovascular Epidemiology and Genetics group)
+
+Co-supervisors:
+Roberto Elosua
+Alba Fernández Sanlés
+
+
+
+Brief description:
