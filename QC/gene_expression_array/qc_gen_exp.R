@@ -113,7 +113,7 @@ fData(cel_files_norm)[1:5,1:7]
 ### OBTAIN MATRIX DATA ###
 
 assayDataElement(cel_files_norm,'exprs')[1:5,1:5]
-# alternative
+# alternativ
 exprs(cel_files_norm)[1:5,1:5]
 
 gen_exp_norm <- assayDataElement(cel_files_norm,'exprs')
