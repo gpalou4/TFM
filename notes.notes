@@ -1,0 +1,36 @@
+[[2020-01-09]
+Notes:
+Ideas:
+
+MOFA //--> 
+1) How to deal with batch effect --> remove latent factors after the model is done?
+2) Annotation to use in GSEA? KEGG or Reactome?
+3) Use of latent factors with machine-learning to classify or predict or correlate with clinical outcomes... 
+4) An omics with many features will have more importance in the model (biased) --> Try to select the same number of features per omic --> or select the highest variable features. (subset of cpgs)
+
+TODO:
+
+[√] Play with the MOFA example
+[ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
+[x] Find a dataset with the same mRNA and methylation kits as the FHS to use the MOFA.
+[√] Download the data
+[ ] Decrypt the data
+[√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
+[ ] Create an image for the Rstudio cluster
+[ ] Start with the Methylation QC
+[ ] Look what kind of phenotype data we need for both methylation and transcriptome
+[ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask informaticians?
+
+Activity Log:
+]
+
+[[2020-01-10]
+Notes:
+Ideas:
+
+Methylation QC //-->
+1) The manifest to remove CpGs is the EPIC or 450k? Is it ok to remove non-cpgs?
+
+TODO:
+Activity Log:
+]
