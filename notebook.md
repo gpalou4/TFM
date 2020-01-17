@@ -73,9 +73,31 @@ We have finally solved the issues and we are currently downloading the data. I h
 #### 10/1/2020: Decrypting the data and Methylation QC
 
 I have started decrypting the data but it takes so long.
-Thus, meanwhile, I have started to do the pipeline for the quality control for the methylation data with Alba's EPIC dataset.
+Thus, meanwhile, I have started to do the pipeline for the quality control for the methylation data with Alba's EPIC dataset. The filtering step is already done and working.
 
 ### Week 13-17 January 2020
 
-#### 13/1/2020:
+#### 13/1/2020: Looking at the downloaded files
 
+Finished decrypting the data.
+Started to look at all the files and searched what files are needed.
+
+#### 14/1/2020: Looking at the downloaded files
+
+I finally have had an idea of what kind of files there are, where is the metadata, etc. However, I don't find the file containing the batches, so we have written to dbGAP Helper.
+I compared the samplesIDs from mRNA's metadata with the samplesIDs from methylation. Around 2300 ID's are matched, from the OFF_CSS files (1900 OFF, and 400 CSS aprox).
+We need to upload the IDATs (methylation raw data) and CEL (gene expression raw data) to the cluster, but we need IT's help.
+
+#### 15/1/2020: Methylation QC pipeline
+
+continue QC meth pipeline --> sex filtering, searching sex metadata, obtained a dataframe with sex and samples IDs. Everything works so far with the EPIC data until step 4) Sex. B and M values obtained (step 5).
+
+#### 16/1/2020:
+
+No work
+
+#### 17/1/2020: Methylation QC pipeline
+
+Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them (Chen 2013 et al. + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper, Zhou et al. 2016, that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
+I also can begin now to try to upload just a few samples from my data and use them to run all the pipeline and change whatever I need to change.
+I have started doing the input reading part.

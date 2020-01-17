@@ -1,6 +1,4 @@
-[[2020-01-09]
 Notes:
-Ideas:
 
 MOFA //--> 
 1) How to deal with batch effect --> remove latent factors after the model is done?
@@ -8,29 +6,24 @@ MOFA //-->
 3) Use of latent factors with machine-learning to classify or predict or correlate with clinical outcomes... 
 4) An omics with many features will have more importance in the model (biased) --> Try to select the same number of features per omic --> or select the highest variable features. (subset of cpgs)
 
+Methylation QC //-->
+1) Create new manifest for the 450K to remove bad quality CpGs with Chen 2013 + Illumina --> Chen 2012 has 30ks, but I don't find the Illumina ones (ask Alba). Instead, I have found another paper
+"Comprehensive characterization, annotation and innovative use of Infinium DNA methylation BeadChip probes (2016)", which contains 60ks probes to remove.
+2) Do we need to do within-sample normalization?
+3) Read sample metadata is done but an error occurs because it needs all IDAT files to be in the same directory as the metadata, and I only have a few of them yet.
+
 TODO:
 
 [√] Play with the MOFA example
 [ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
 [x] Find a dataset with the same mRNA and methylation kits as the FHS to use the MOFA.
 [√] Download the data
-[ ] Decrypt the data
+[√] Decrypt the data
 [√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
 [ ] Create an image for the Rstudio cluster
 [ ] Start with the Methylation QC
 [ ] Look what kind of phenotype data we need for both methylation and transcriptome
 [ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask informaticians?
+[ ] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
+[ ] Search for the clinical phenotypes (CVD events etc) on the FHS folder (12GB)
 
-Activity Log:
-]
-
-[[2020-01-10]
-Notes:
-Ideas:
-
-Methylation QC //-->
-1) The manifest to remove CpGs is the EPIC or 450k? Is it ok to remove non-cpgs?
-
-TODO:
-Activity Log:
-]

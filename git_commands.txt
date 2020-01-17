@@ -1,0 +1,19 @@
+
+
+
+## Commit
+git pull
+git add *
+git commit -m 'MESSAGE'
+git push
+
+## Remove last 2 commits
+git reset --hard HEAD~2
+
+## Undo removal of last commit
+# first
+git reflog
+# check the ID of the commit
+git reset --hard ID
+
+
