@@ -12,6 +12,13 @@ Methylation QC //-->
 2) Do we need to do within-sample normalization?
 3) Read sample metadata is done but an error occurs because it needs all IDAT files to be in the same directory as the metadata, and I only have a few of them yet.
 
+gene expression QC //-->
+1) Density plots; try to put labels so we can detect the sample that is wrong
+2) How to remove samples/genes with low expression?
+3) target = Core or probeset? for plots...
+4) Email a Lara enviado, esperando respuesta...
+
+
 TODO:
 
 [√] Play with the MOFA example
@@ -21,9 +28,10 @@ TODO:
 [√] Decrypt the data
 [√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
 [ ] Create an image for the Rstudio cluster
-[ ] Start with the Methylation QC
+[√] Start with the Methylation QC
 [ ] Look what kind of phenotype data we need for both methylation and transcriptome
 [ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask informaticians?
 [ ] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
 [ ] Search for the clinical phenotypes (CVD events etc) on the FHS folder (12GB)
+[ ] Start with the mRNA QC
 

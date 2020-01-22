@@ -101,3 +101,17 @@ No work
 Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them (Chen 2013 et al. + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper, Zhou et al. 2016, that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
 I also can begin now to try to upload just a few samples from my data and use them to run all the pipeline and change whatever I need to change.
 I have started doing the input reading part.
+
+#### 20/1/2020: gene expression QC pipeline
+
+I have started to make the Quality Control for the gene expression data with 5 samples, and doing all the plots by batches (created batches because I don't have the real metadata yet).
+
+#### 21/1/2020: Methylation QC pipeline
+
+I finally was able to integrate metadata with the IDATs files, there was an error happening: "Slide" and "Array" fields in the metadata file must be filled in all samples for `minfi` to work properly when reading the data. I had to filled these fields because most of the samples didn't have information. I tried this with an example of 5 individuals and it works.
+
+#### 22/1/2020: Methylation QC pipeline
+
+I have adapted the pipeline to the 450k subset real data (5 samples). All the steps works so far. Now I would like to try it out with all the samples but I am still waiting for the data to be uploaded on the cluster...
+
+#### 23/1/2020: gene expression QC pipeline
