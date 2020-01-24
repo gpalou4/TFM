@@ -7,17 +7,22 @@ MOFA //-->
 4) An omics with many features will have more importance in the model (biased) --> Try to select the same number of features per omic --> or select the highest variable features. (subset of cpgs)
 
 Methylation QC //-->
-1) Create new manifest for the 450K to remove bad quality CpGs with Chen 2013 + Illumina --> Chen 2012 has 30ks, but I don't find the Illumina ones (ask Alba). Instead, I have found another paper
-"Comprehensive characterization, annotation and innovative use of Infinium DNA methylation BeadChip probes (2016)", which contains 60ks probes to remove.
-2) Do we need to do within-sample normalization?
-3) Read sample metadata is done but an error occurs because it needs all IDAT files to be in the same directory as the metadata, and I only have a few of them yet.
+1) Get M values from beta2M or formula directoly.  
 
 gene expression QC //-->
 1) Density plots; try to put labels so we can detect the sample that is wrong
-2) How to remove samples/genes with low expression?
+2) How to remove genes with low expression?
 3) target = Core or probeset? for plots...
 4) Email a Lara enviado, esperando respuesta...
+5) Control by batch effect? After RMA? Maybe use MDS or hierarchichal clustering to check first, then remove with Combat?
+"https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0017238" --> After RMA and Combat is the best
+"ComBat treats batch effects as additive and multiplicative effects. So it is basically a mixture of a mean-centering algorithm like PAMR, and a scale-based algorithm similar to Ratio G. This dual approach probably explains ComBat's superior overall performance."
+NOT NECESSARY, AS WE CAN PUT BATCH COVARIATES IN THE MOFA MODEL! BUT  Ideally, all undesired sources of variation should be removed a priori from the model.
 
+6) RMA is a between-sample normalization (Quantile-Normalization, to make data from different arrays comparable), 
+but what about within-sample normalization (make gene expression between genes comparable?) --> Seems that RMA makes log2 transformation, but...?
+7) Better method than RMA is --> "An alternative to this which also adjusts for the GC content, and how it affects probe-binding affinities, is called GC-RMA"
+8) Cross-table of batches-outcome (CVD) to look for good/bad experimental design
 
 TODO:
 
@@ -27,11 +32,21 @@ TODO:
 [√] Download the data
 [√] Decrypt the data
 [√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
-[ ] Create an image for the Rstudio cluster
+[ ] Create an image for the Rstudio cluster for the gene expression data
 [√] Start with the Methylation QC
 [ ] Look what kind of phenotype data we need for both methylation and transcriptome
-[ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask informaticians?
+[ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask ITs?
 [ ] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
 [ ] Search for the clinical phenotypes (CVD events etc) on the FHS folder (12GB)
-[ ] Start with the mRNA QC
+[√] Start with the mRNA QC
+[√] Finish Methylation QC with subset example
+[ ] SVA for methylation batch effect
+[ ] Discuss ComBat vs MOFA covariates to deal with the batch effect
+[ ] Relative degree + ethnicity --> PCA of genomic data and obtain PC 1-10 as covariates
+[ ] Bootstrap strategy to avoid overfitting of MOFA model.
 
+NEXT:
+
+[] SVA for methylation batch effect
+[] Try Methylation QC with all samples
+[] If still no data uploaded --> Use gene expression real batch to try pipeline

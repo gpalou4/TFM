@@ -98,7 +98,8 @@ No work
 
 #### 17/1/2020: Methylation QC pipeline
 
-Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them (Chen 2013 et al. + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper, Zhou et al. 2016, that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
+Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them (Chen 2013 et al. + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper ("Comprehensive characterization, annotation and innovative use of Infinium DNA methylation BeadChip probes. Zhou et al. 2016), that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
+
 I also can begin now to try to upload just a few samples from my data and use them to run all the pipeline and change whatever I need to change.
 I have started doing the input reading part.
 
@@ -114,4 +115,18 @@ I finally was able to integrate metadata with the IDATs files, there was an erro
 
 I have adapted the pipeline to the 450k subset real data (5 samples). All the steps works so far. Now I would like to try it out with all the samples but I am still waiting for the data to be uploaded on the cluster...
 
-#### 23/1/2020: gene expression QC pipeline
+#### 23/1/2020: gene expression batch effect
+
+Checked papers about how to deal with the batch effect in gene expression. `ComBat` is the best method.
+> Removing Batch Effects in Analysis of Expression Microarray Data: An Evaluation of Six Batch Adjustment Methods
+*Of the batch adjustment methods we evaluated, we found that the empirical Bayes algorithm implemented in ComBat was best able to reduce and remove batch effects while increasing precision and accuracy*
+However, it turns out `MOFA` can deal with batch effects by inserting covariates into the model. It is not ideal, authors say, but it is okey. We shall discuss which method to use.
+I found the batch metadata from within a file.
+
+#### 24/1/2020: TFM proposal comments meeting + Methylation normalization
+
+During the meeting we discussed how to deal with the comments presented by the reviewers on the thesis proposal. 
+1) REVIEWER C: Batch effect on Methylation data --> We have decided to perform the normalization recommended, with `Dasen`, and not to do the standardization. We will also use SVA to help deal with the batch effect.
+2) REVIEWER E: About the relative degree, we will probably try to download the genomic data, perform a PCA, and use the first 10 PCs as covariates in the MOFA model. To avoid overfitting we can't have an independent cohort, but we might use a bootstrap strategy and perform MOFA multiple times on diferent subsamples and create an average of the results somehow.
+3) REVIEWER D: Missing information of the individuals. MOFA can deal with missing information, it just ignores it. And there are no missing individuals in our dataset.
+I have already done the normalization with `Dasen` for the methylation data.
