@@ -1,52 +1,110 @@
 Notes:
 
-MOFA //--> 
+// MOFA:
 1) How to deal with batch effect --> remove latent factors after the model is done?
 2) Annotation to use in GSEA? KEGG or Reactome?
 3) Use of latent factors with machine-learning to classify or predict or correlate with clinical outcomes... 
 4) An omics with many features will have more importance in the model (biased) --> Try to select the same number of features per omic --> or select the highest variable features. (subset of cpgs)
+5) Covariables in MOFA model are somehow split between omics? I.e. smoke is a covariable for methylation but not for gene expression?
 
-Methylation QC //-->
-1) Get M values from beta2M or formula directoly.  
+// Methylation:
+1) Get M values from beta2M or formula directly --> Alba uses the formula so I will continue using that 
 
-gene expression QC //-->
+// Gene expression:
 1) Density plots; try to put labels so we can detect the sample that is wrong
-2) How to remove genes with low expression?
-3) target = Core or probeset? for plots...
-4) Email a Lara enviado, esperando respuesta...
+2) How to remove genes with low expression? LARA gmail
+3) target = Core or probeset? --> Target
 5) Control by batch effect? After RMA? Maybe use MDS or hierarchichal clustering to check first, then remove with Combat?
 "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0017238" --> After RMA and Combat is the best
 "ComBat treats batch effects as additive and multiplicative effects. So it is basically a mixture of a mean-centering algorithm like PAMR, and a scale-based algorithm similar to Ratio G. This dual approach probably explains ComBat's superior overall performance."
-NOT NECESSARY, AS WE CAN PUT BATCH COVARIATES IN THE MOFA MODEL! BUT  Ideally, all undesired sources of variation should be removed a priori from the model.
-
+NOT NECESSARY, AS WE CAN PUT BATCH COVARIATES IN THE MOFA MODEL. BUT  Ideally, all undesired sources of variation should be removed a priori from the model.
 6) RMA is a between-sample normalization (Quantile-Normalization, to make data from different arrays comparable), 
 but what about within-sample normalization (make gene expression between genes comparable?) --> Seems that RMA makes log2 transformation, but...?
 7) Better method than RMA is --> "An alternative to this which also adjusts for the GC content, and how it affects probe-binding affinities, is called GC-RMA"
 8) Cross-table of batches-outcome (CVD) to look for good/bad experimental design
 
-TODO:
+DONE:
 
-[√] Play with the MOFA example
-[ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
+// Methylation:
+[√] Download the data
+[√] Decrypt the data
+[√] Upload raw data to the cluster
+[√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
+[√] Start with the Methylation QC
+[√] Look what kind of samples metadata data we need
+[√] Finish Methylation QC with subset example
+[√] Search for the samples metadata (CVD events etc) on the FHS folder (12GB) --> Not done, because I already have this data from Alba's files
+[√] Methylation QC with all 2620 samples
+[√] Remove X/Y chrs CpGs from M values matrix? --> Done for batch effect plots and SVA.
+[√] Remove samples metadata with NA's
+
+// Gene expression:
+
 [x] Find a dataset with the same mRNA and methylation kits as the FHS to use the MOFA.
 [√] Download the data
 [√] Decrypt the data
-[√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
-[ ] Create an image for the Rstudio cluster for the gene expression data
-[√] Start with the Methylation QC
-[ ] Look what kind of phenotype data we need for both methylation and transcriptome
-[ ] Upload methylation IDAT data to the cluster --> Use PuTTY from windows, or ask ITs?
-[ ] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
-[ ] Search for the clinical phenotypes (CVD events etc) on the FHS folder (12GB)
+[√] Upload raw data to the cluster
+[√] Create an image for the Rstudio cluster for the gene expression data
+[√] Look what kind of samples metadata data we need
 [√] Start with the mRNA QC
-[√] Finish Methylation QC with subset example
-[ ] SVA for methylation batch effect
+[√] Create samples metadata for gene expression data
+[√] Try singularity for the gene expression data
+[√] Remove samples metadata with NA's
+
+// MOFA:
+
+[√] Play with the MOFA example
+[√] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
+
+
+TO-DO:
+
+// Methylation:
+
+// Gene expression:
+[ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
+
+// MOFA:
 [ ] Discuss ComBat vs MOFA covariates to deal with the batch effect
 [ ] Relative degree + ethnicity --> PCA of genomic data and obtain PC 1-10 as covariates
 [ ] Bootstrap strategy to avoid overfitting of MOFA model.
 
 NEXT:
 
-[] SVA for methylation batch effect
-[] Try Methylation QC with all samples
-[] If still no data uploaded --> Use gene expression real batch to try pipeline
+// Methylation:
+
+[ ] SVA for Methylation
+[ ] Batch effect plots for Methylation
+
+// Gene expression:
+
+[ ] Try to read_input the gene expression data
+[ ] Continue writing mRNA pipeline on cluster
+
+// MOFA:
+
+
+PROBLEMS OR QUESTIONS:
+
+// General:
+
+1) 5 Nodos vs 1 nodo long --> se puede hacer si se puede paralelizar, (mirar si oligo permite paralelizar)
+2) Pasar todo a /projects2 ??? (tiene 7T de espacio). Usar df -v 
+
+// Methylation:
+
+1) CpGs > or < 4 SD are NOT removed, but rather transformed to NA's right?
+2) SVA me da error
+3) El SVA lo hago con los 2620, 2080 o 1522 individuos? Con 2620 no se puede porque no hay datos de CVD.
+    3.1) Opción 1: Con 2080 y luego para añadir los SVAs en el MOFA sólo cojo los 1522 svas de esos individuos
+    3.2) Opción 2: Directamente hago el sva para los 1522 individuos y no tengo que hacer ningún subset.
+4) Y el batch effect?
+5) El QC lo he hecho con los 2620 individuos y 480.000cpgs.... Después del filtering quedan...
+
+// Gene expression:
+
+1) No me cargan los datos (read_input) --> Probar de cargar 100 ind, 200 ind, 300 ind y mirar si la progresion de uso de RAM es lineal o exponencial y estimar cuanto necesitariamos.
+
+// MOFA:
+
+

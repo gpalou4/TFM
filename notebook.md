@@ -103,6 +103,8 @@ Finished the pipeline. But there are still a few things to do. I have created a 
 I also can begin now to try to upload just a few samples from my data and use them to run all the pipeline and change whatever I need to change.
 I have started doing the input reading part.
 
+### Week 20-24 January 2020
+
 #### 20/1/2020: gene expression QC pipeline
 
 I have started to make the Quality Control for the gene expression data with 5 samples, and doing all the plots by batches (created batches because I don't have the real metadata yet).
@@ -130,3 +132,103 @@ During the meeting we discussed how to deal with the comments presented by the r
 2) REVIEWER E: About the relative degree, we will probably try to download the genomic data, perform a PCA, and use the first 10 PCs as covariates in the MOFA model. To avoid overfitting we can't have an independent cohort, but we might use a bootstrap strategy and perform MOFA multiple times on diferent subsamples and create an average of the results somehow.
 3) REVIEWER D: Missing information of the individuals. MOFA can deal with missing information, it just ignores it. And there are no missing individuals in our dataset.
 I have already done the normalization with `Dasen` for the methylation data.
+
+### Week 27-31 January 2020
+
+#### 27/1/2020: Singularity
+
+Alba helped me to create a singularity image through the web application. But there were a lot of errors.
+
+#### 28/1/2020: Singularity + real metadata gene expression
+
+I finally solved the errors and created a singularity image.
+I also swapped the invented metadata of the gene expression for the real one.
+
+#### 29/1/2020: Upload data to the cluster
+
+As I have been waiting so long for the data to be uploaded I decided to manually do it myself. I spent the whole day uploading the gene expression raw files.
+
+#### 30/1/2020: Upload data to the cluster
+
+I spent all day uploading the methylation raw files.
+
+#### 31/1/2020: Upload data to the cluster + Alba PhD defense
+
+I finished to upload all raw files.
+Alba PhD defense.
+
+### Week 3-7 February 2020
+
+#### 3/2/2020: Methylation QC pipeline
+
+I have begun running the methylation QC pipeline. There is an error uploading the raw data, I think it must be because of RAM memory problems.
+
+#### 4/2/2020: Methylation QC pipeline
+
+I tried to solve the error but it persists.
+The cluster did not work correctly.
+
+#### 5/2/2020: Methylation QC pipeline
+
+I reduced the number of individuals to analyze by matching gene expression raw files with methylation raw files. Now only 1786 individuals can be analyzed (from 2600 initially) --> RAM error solved
+
+#### 6/2/2020: Methylation QC pipeline
+
+Alba sent me the samples metadata with the covariates and all the stuff.
+I continued with the QC pipeline, several errors encountered.
+
+#### 7/2/2020: Methylation QC pipeline
+
+I corrected the sex script.
+The pipeline works until normalization with Dasen.
+Meged samples metadata from Alba and my files.
+
+### Week 10-14 February 2020
+
+#### 10/2/2020: Methylation QC pipeline
+
+Rerunning all the pipeline because some individuals have missing CVD data (from Alba's metadata file). Now 1786 --> 1399 individuals to analyze.
+Meanwhile, I continue the pipeline with the previous files, now doing SVA analysis.
+Cluster has stopped to work, I cannot work anymore today.
+
+#### 11/2/2020: Matching gene expression and methylation samples metadata
+
+I finally matched correctly the samples metadata for both omics, gene expression and methylation --> 1549 individuals shared
+I have begun the methylation QC pipeline with the 1549 individuals.
+
+#### 12/2/2020: Both QC pipelines
+
+Continuing with methylation QC pipeline
+Began the gene expression QC pipeline (reading input)
+Alba said it is better to perform the QC with ALL samples and after, do the matching. So, I created two new samples metadata files, one for each omics (2620 for methylation and 1818 for gene expression) and I'll begin to run methylation QC pipeline again, hopefully for the last time.
+
+#### 13/2/2020: Methylation QC pipeline
+
+Started the methylation QC pipeline for the 2620 individuals, this time without getting a RAM memory error.
+
+#### 14/2/2020: Methylation QC pipeline
+
+Followed the methylation QC pipeline. I had an error in filterting step so I divided the step in two substeps and it worked.
+
+### Week 17-21 February 2020
+
+#### 17/2/2020: Both QC pipelines
+
+mRNA input --> Error
+meth --> all ok until norm + 4sd
+
+#### 18/2/2020: Both QC pipelines
+
+mRNA input --> still error bc of RAM... what do we do?
+meth --> mrna_match error, not loading Mvalues!
+     --> once completed I will start sva
+     --> Started batch effect plots
+
+#### 19/2/2020: Both QC pipelines
+
+mRNA input --> still error bc of RAM... what do we do?
+
+meth --> sva started
+    --> removed X/Y chrs cpgs to do sva and batch effect
+    --> chanching script of batch effect plots
+ 
