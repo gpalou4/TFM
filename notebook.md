@@ -214,21 +214,102 @@ Followed the methylation QC pipeline. I had an error in filterting step so I div
 
 #### 17/2/2020: Both QC pipelines
 
-mRNA input --> Error
-meth --> all ok until norm + 4sd
+There was an error trying to upload the mRNA data to a ExpressionFeatureSet object.
+Methylation QC worked fine until normalization steps.
 
 #### 18/2/2020: Both QC pipelines
 
-mRNA input --> still error bc of RAM... what do we do?
-meth --> mrna_match error, not loading Mvalues!
-     --> once completed I will start sva
-     --> Started batch effect plots
+The mRNA error persisted, it seems is a RAM problem.
+Cluster errors, couldn't load M values from methylation data. I kept with the QC methylation pipeline, doing SVA and batch effect plots.
 
 #### 19/2/2020: Both QC pipelines
 
-mRNA input --> still error bc of RAM... what do we do?
+The mRNA error persisted, it seems is a RAM problem.
+Removal of X/Y chrs CpGs for SVA, and batch effect plots, changing the scripts.
 
-meth --> sva started
-    --> removed X/Y chrs cpgs to do sva and batch effect
-    --> chanching script of batch effect plots
+#### 20/2/2020: Both QC pipelines
+
+Didn't go
+
+#### 21/2/2020: Both QC pipelines
  
+Talked to the group about the mRNA computational problem.
+Problem with NA's (after SD outliers converted to NA), implies only ~30.000 CpGs are used for SVA. We can't do much more!
+Finishing batch effect plots
+
+### Week 24-28 February 2020
+
+#### 24/2/2020: mRNA computational
+
+I estimated the computational cost in RAM needed to upload the 1820 samples from mRNA. We have 255GB, we need around 400 GB. Solution?
+
+#### 25/2/2020: QC mRNA
+
+Lab meeting
+Doing scripts for the plots before normalization
+
+#### 26/2/2020: parallel computing + gene expression QC
+
+Alternative to upgrade the cluster memory: parallel computing --> I talked with Joan Marc, he said it's difficult but feasible and he has to check it. I will persist reminding him.
+A merge of 2 ExpressionFeatureSets doesn't work, the function accepts ExpressionSets (so, after the QC..., not very convenient)
+Correcting plots scripts
+
+#### 27/2/2020: gene expression QC
+
+A lot of problems with obtaining a threshold for the plots, in order to remove bad quality samples.
+NUSE prolems solved, plot density thresholds still unkown.
+
+#### 28/2/2020: gene expression QC
+
+Normalized plots of boxplots and MA. (RLE, NUSE not necessary,as it is already normalized)
+Filtering samples using the thresholds
+Filtering genes (with some functions + genefilter).
+
+### Week 2-6 March 2020: parallel + batch effect QC mrna + begin mofa
+
+#### 2/3/2020:
+
+No work
+
+#### 3/3/2020: batch effect QC mrna + begin MOFA
+
+Finished batch effect plots.
+Samples metadata subset and match between mRNA and methylation data. It is already done, getting ready to start MOFA tomorrow.
+I rerun SVA for the QC methylation.
+
+#### 4/3/2020: Begin MOFA
+
+QC meth: SVA found 1 sva variable
+MOFA: singularity MOFA image, lleva muchos tries hasta que funciona. De momento no workea.
+
+#### 5/3/2020: MOFA
+
+MOFA: started writing the MOFA scripts using an in-house image. The training function doesn't work because of the image.
+
+#### 6/3/2020:  Meeting
+
+Meeting + couldn't work that day
+
+### Week 9-13 March 2020: MOFA
+
+#### 9/3/2020: MOFA image + training
+
+Tried several images, none of them working properly. Then I used the Dockerfile the MOFA authors provide but still didn't work because of the reticulate package.
+I wrote the question on the SLACK MOFA group.
+Finally solved it, I created my own Dockerfile using theirs, + added some ubuntu dependencies that were needed for the Reticulate package.
+The training function is already running.
+
+#### 10/3/2020: Reduction Methylation dimensions
+
+Several strategies are to be done to reduce methylation matrix dimensions:
+1) Obtain the 20.000 most variable CpGs, ranked by SD.
+2) Perform an EWAS to CVD and obtain the 20.000 CpGs with the lowest p-value
+3) Obtain DMRs
+4) Merge CpGs from the same gene
+5) Select CpGs that we know are already related to CVD
+
+I did 1) and 2)
+
+#### 11/3/2020: 
+
+

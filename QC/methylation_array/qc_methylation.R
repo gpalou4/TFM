@@ -3,6 +3,7 @@ rm(list=ls())
 
 # Libraries
 library(minfi)
+library(minfiData)
 library(wateRmelon)
 library(limma)
 library(IlluminaHumanMethylation450kanno.ilmn12.hg19)

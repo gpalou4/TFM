@@ -37,6 +37,8 @@ DONE:
 [√] Methylation QC with all 2620 samples
 [√] Remove X/Y chrs CpGs from M values matrix? --> Done for batch effect plots and SVA.
 [√] Remove samples metadata with NA's
+[√] SVA for Methylation --> Check why we only use 35.000 CpGs instead of 400.000 (It is correct to use the 35ks)
+[x] Batch effect plots for Methylation RERUN TO PUT TITLES
 
 // Gene expression:
 
@@ -50,61 +52,87 @@ DONE:
 [√] Create samples metadata for gene expression data
 [√] Try singularity for the gene expression data
 [√] Remove samples metadata with NA's
+[√] Filtering: write a script to remove bad quality samples and low gene expressed genes
+[√] Run read_input with 100,200,300 individuals... and estimate RAM consumption
+[√] Continue writing mRNA pipeline on cluster
+[√] Use gene expression pipeline with the 1200 individuals already stored in the ExpressionSet object.
 
 // MOFA:
 
 [√] Play with the MOFA example
 [√] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
+[√] Begin MOFA pipeline
+[√] Create singularity image for MOFA packages. I used the original docker from the authors + added some packages
+[√] Remove ChrX/Y CpGs and innecessary covariates before creating the MOFA object
 
 
 TO-DO:
 
 // Methylation:
 
+[ ] Obtain most variable CpGs (20.000-30.000). Four ways:
+    [√] 1) Obtain the most variable CpGs, ranked by SD.
+    [ ] 2) Perform an EWAS with CVD and obtain the CpGs with the lowest p-value [RUNNING]
+    [ ] 3) Obtain DMRs (p-values)
+    [ ] 4) Merge CpGs from the same gene
+    [ ] 5) Select CpGs that we know are already related to CVD
+
 // Gene expression:
+
 [ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
+[ ] Can Oligo parallelize? Check it. Yes --> Waiting for Joan Marc.
+
+[ ] Detect which samples from the plots are bad quality samples
+    [√] Boxplot: Mediana +- 0.5
+    [√] MA-plots: a ojo
+    [ ] Density plots: He empezado haciendo la media de los valores del eje de X (log-intensities), pero esto no tiene sentido si es un density plot...
+    [√] NUSE: 1 +- 0.03
+    [√] RLE: 0 +- 0.15
+[ ] PLOTS AFTER NORMALIZATION:
+    [√] Boxplot:
+    [√] MA-plots:
+    [ ] Density plots: 
+    [√] NUSE: No hace falta porque estos plots se hacen solo para FeatureSets objects, es decir, sin nomalizar, porque los normaliza cuado hace la función
+    [√] RLE: lo mismo que el RLE
+[ ] Filtering samples also with MA-Plots, not necessary now but it is when we have all the data.
+[ ] Combine two EFSets could be done after all QC, once the objects are ExpressionFeatureSets, not ExonFeatureSets...
+[√] MDS plots for batch effect identification
 
 // MOFA:
-[ ] Discuss ComBat vs MOFA covariates to deal with the batch effect
-[ ] Relative degree + ethnicity --> PCA of genomic data and obtain PC 1-10 as covariates
-[ ] Bootstrap strategy to avoid overfitting of MOFA model.
 
-NEXT:
-
-// Methylation:
-
-[ ] SVA for Methylation
-[ ] Batch effect plots for Methylation
-
-// Gene expression:
-
-[ ] Try to read_input the gene expression data
-[ ] Continue writing mRNA pipeline on cluster
-
-// MOFA:
-
+[ ] Train the MOFA object
+[ ] Try training MOFA without covariates (as suggested)
 
 PROBLEMS OR QUESTIONS:
 
 // General:
 
-1) 5 Nodos vs 1 nodo long --> se puede hacer si se puede paralelizar, (mirar si oligo permite paralelizar)
-2) Pasar todo a /projects2 ??? (tiene 7T de espacio). Usar df -v 
+1) Pasar todo a /projects2 ??? (tiene 7T de espacio). Usar df -v 
 
 // Methylation:
 
-1) CpGs > or < 4 SD are NOT removed, but rather transformed to NA's right?
-2) SVA me da error
-3) El SVA lo hago con los 2620, 2080 o 1522 individuos? Con 2620 no se puede porque no hay datos de CVD.
-    3.1) Opción 1: Con 2080 y luego para añadir los SVAs en el MOFA sólo cojo los 1522 svas de esos individuos
-    3.2) Opción 2: Directamente hago el sva para los 1522 individuos y no tengo que hacer ningún subset.
-4) Y el batch effect?
-5) El QC lo he hecho con los 2620 individuos y 480.000cpgs.... Después del filtering quedan...
+1) El QC lo he hecho con los 2620 individuos y 480.000cpgs.... Después del filtering quedan...
 
 // Gene expression:
 
-1) No me cargan los datos (read_input) --> Probar de cargar 100 ind, 200 ind, 300 ind y mirar si la progresion de uso de RAM es lineal o exponencial y estimar cuanto necesitariamos.
+1) Thresholds to use for plots (look up), and talk with Isaac for density plots.
+2) Filtering threshold for gene expression (I used 4), samples threshold is ok.
+3) parallelize depends on Joan Marc
+4) Talk with Lara for QC (answer email)
 
 // MOFA:
+
+1) MOFA2 suggests not using covariates (ask ricard...)
+2) Discuss ComBat vs MOFA covariates to deal with the batch effect
+3) Relative degree + ethnicity --> PCA of genomic data and obtain PC 1-10 as covariates
+4) Bootstrap strategy to avoid overfitting of MOFA model.
+
+
+MEETINGS:
+
+1) Si RLE pero no NUSE --> No eliminar las samples
+2) MOFA2 + paper integracion
+
+
 
 
