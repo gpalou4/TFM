@@ -98,7 +98,7 @@ No work
 
 #### 17/1/2020: Methylation QC pipeline
 
-Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them (Chen 2013 et al. + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper ("Comprehensive characterization, annotation and innovative use of Infinium DNA methylation BeadChip probes. Zhou et al. 2016), that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
+Finished the pipeline. But there are still a few things to do. I have created a a list of cross-reactive probes to remove them ("Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray", + Illumina Manifest), but I can't find the CpGs to remove from the Illumina manifest, instead I have searched for a most recent paper ("Comprehensive characterization, annotation and innovative use of Infinium DNA methylation BeadChip probes. Zhou et al. 2016), that contains some CpGs. Chen has 30k CpGs, and Zhou 60ks, but 60ks uniquely between them.
 
 I also can begin now to try to upload just a few samples from my data and use them to run all the pipeline and change whatever I need to change.
 I have started doing the input reading part.
@@ -310,6 +310,157 @@ Several strategies are to be done to reduce methylation matrix dimensions:
 
 I did 1) and 2)
 
-#### 11/3/2020: 
+#### 11/3/2020: MOFA analysis
+
+COVID-19 --> WORKING FROM HOME
+MOFA plots + looking the results
+
+#### 12/3/2020: MOFA analysis
+
+MOFA plots + looking the results
 
 
+#### 13/3/2020: MOFA analysis
+
+More plots, more results...
+
+### Week 16-20 March 2020: COVID-19 ALARM STATE + MOFA analysis
+
+Due to the COVID-19 situation I will be working from home (since 11th march).
+This week I performed two MOFA models (with groups and without groups) and corrected (chatting with the MOFA author Ricard) some plots that were not working, among other things.
+
+Meeting (19/3/2020):
+
+    1) Check CpGs in interested factors (10/13 groups, 14 nogroups) and merge into genes. Also check CpGs/mRNA and look for differences in expression between CVD and no CVD (Alba's code).
+    2) Obain factor values per individual and perform an average and median between CVD and no CVD people. T-test + U Man-Wittney.
+    3) GSEA: pick most expressed transcripts + perform GSEA nogroups
+    4) Perform models without covariables.
+    5) Correlation between factors and covariables and perform clustering of the factors using that covariables.
+    6) Upload the image
+    7) EWAS: Alba will check
+
+### Week 23-27 March 2020: MOFA analysis
+
+#### 23/3/2020: MOFA analysis
+
+I did the following: 
+
+1) MOFA models with no covariables 
+2) Checked top20  CpGs/mRNA from heatmap in interested factors (10/13 in groups, 14 in nogroups) and looked for differences between CVD and no CVD, using
+T-test and Mann-Whitney test. 
+3) Identified clusters on heatmap in these factors of interest, and check EWAS catalog + affymetrix annotation (not finished)
+4) T-test and Mann-Whitney test for factors 10/13 (done between CVD-no CVD, but should it be between individuals of the same group?, i.e. 2 tests?)
+results weird?
+
+#### 24/3/2020: MOFA analysis
+
+1) MOFA models with no covariables: I asked Ricard about that. It seems MOFA does not use covariables. Answer: "covariates cannot be used for model training (see FAQ point 5.3). You can either
+    (1) regress them out before training if they are undesired variation"
+    (2) add them to metadata of the MOFA object after training if they are useful to characterise the factors"
+2) Finished the annotation of features from the clusters heatmap.
+3) Performed a correlation between features from factors 10,13 and 14. Matrix of Spearman correlations, diagonal of 1.
+
+***Ricard: just as a reminder: when using the multi-group framework the features are centered to zero-mean per group. That means that you are assuming that the two groups are like “batches”. The aim is not to find a factor that essentially separates the two groups, but rather to find out which  sources of variation are common or unique to the different groups***
+
+
+#### 25/3/2020: MOFA analysis
+
+1) Features that overlap between factors
+2) Clustering plots of factors-covariable written in the cluster script (not in local)
+
+#### 26/3/2020: MOFA analysis + Lara meeting
+
+Lara meeting, about mRNA QC:
+
+    1) ArrayQualityMetrics: 3+/6 plots mal == outlier.
+    2) Por encima Percentil 90 y por debajo percentil 10. Estudiar distribución mediana de invidiuos, individuos con ediana por encima percentil 95 o por debajo de percentil 5 son outliers, Hacer eso para cada plot (boxplot, NUSE...). Outliers en 3+/6 plots son muestras a eliminar.
+    3) Estructura cluster entre diferentes batch. Hierarchichal clustering
+    4) limpiar batch con Combat
+    5) Hacer mi MDS plot pero con batch degradado
+
+1) For the groups model: On factor 10, obtained a categorical variable that splits CVD group in two. Performed t-test (for continous variables) and
+chi-square tests (categorical variables) between the obtained variable and covariables.
+
+#### 27/3/2020: MOFA analysis + QC mRNA
+
+Perform the same as yesterday but with factor 14.
+
+### Week 30-03 March-April 2020: MOFA analysis + mRNA QC
+
+#### 30/3/2020: MOFA analysis
+
+I performed a t-test between factor 10,14 values from CVD group and CHD, and finished the tests between CVD subgroups and all covariables.
+
+#### 31/3/2020: QC mRNA
+
+I did again the QC of the mRNA as Lara suggested: distribution of medians for every plot (NUSE, RLE, boxplot and MA); individuals with a median above 95% quantile or below 5% quantile are considered suspicious. If the same sample is an outlier in minimum 2/4 plots, this sample is excluded. MA-plots were visualized manually as median data cannot be extracted from the function value. I checked, one by one, that all outlier samples (90) are real outliers in their respective plots
+I also used ComBat to remove batch effect and plotted the MDS plot before the removal with a gradient legend.
+
+#### 1/4/2020: MOFA analysis
+
+I created two new MOFA models:
+-With the corrected individuals from the QC from yesterday, 934 x 934.
+-With all samples (using missing individuals), 934 individuals with gene expression data and 2080 individuals with methylation data. 
+
+#### 2/4/2020: MOFA analysis: prediction and survival analysis
+
+Performed the prediction analysis for the Factor 14 from the old model (nogroups_984): Cox regression, kaplan meier plot and discrimination analysis. Reclassification gave me error.
+
+#### 3/4/2020: MOFA analysis
+
+Meeting + correction of scripts from prediction analysis, and new models.
+I created two submodels (grups and nogroups) for each model, so in total there are 4 models: groups_934, nogroups_934, groups_934_2080, nogroups_934_2080.
+
+### Week 06-10 April 2020: MOFA analysis with new models
+
+#### 6/4/2020: MOFA analysis
+
+Changed and adapted the scripts for the new models. I finished the first two: nogroups_934, nogroups_934_2080
+
+#### 7/4/2020: MOFA analysis
+
+Same as yesterday but for the groups models. The groups_934_2080 is incorrect, I have rerunned it again, and I will finish it tomorrw
+I performed the survival analysis, etc, for the models.
+
+#### 8/4/2020: MOFA analysis
+
+There has been another problem with groups_934_2080 model, related with sample names ordering. I have spent all day fixing it, and now it's running again.
+Doing the singularity image for the survival analysis.
+Related with the previous error, I found out that the batch effect was not performed in the 938 models due to the samples ordering.  
+
+#### 9/4/2020: MOFA analysis
+
+I had to update the models: 938 models corrected by batch effect; removed mRNA data from mRNA batch 15 (were clustered weirdly in the MOFA plots); and removed
+the genes from ChrX/Y from gene expression data.
+
+#### 10/4/2020: MOFA analysis
+
+I created the models again and began to run and correct the scripts accordingly.
+
+### Week 13-17 April 2020: MOFA analysis with updated models + manuscript writing
+
+#### 13/4/2020: MOFA analysis
+
+Analysis of the updated models. The mRNA batch 15 surprisingly was still producing weird results, eventhough we only had methylation data from that individuals. We decided to remove the complete batch from both methylation and gene expression (already done) data. Thus, I began to update, create and run the new models.
+
+#### 14/4/2020: MOFA analysis + manuscript writing (methods)
+
+New models: nogroups_914, groups_914, nogroups_914_2055, groups_914_2055.
+Still running the models.
+Began to write the materials and methods section of the manuscript
+
+#### 15/4/2020: MOFA analysis + manuscript writing (methods)
+
+Analysis of the updated models
+Meeting
+
+#### 16/4/2020: MOFA analysis + manuscript writing (methods)
+
+#### 17/4/2020: MOFA analysis + manuscript writing (methods)
+
+### Week 20-24 April 2020: MOFA analysis with updated models + manuscript writing
+
+#### 20/4/2020: MOFA analysis + manuscript writing (methods)
+#### 21/4/2020: MOFA analysis + manuscript writing (methods)
+
+Ricard meeting
