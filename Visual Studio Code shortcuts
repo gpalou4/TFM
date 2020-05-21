@@ -1,8 +1,0 @@
-
-
-{
-  "key": "ctrl+shift+v",
-  "command": "markdown.showPreview",
-  "when": "editorLangId == 'markdown'"
-}
-
