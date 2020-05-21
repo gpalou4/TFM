@@ -1,0 +1,349 @@
+Notes:
+
+// MOFA:
+1) How to deal with batch effect --> remove latent factors after the model is done?
+2) Annotation to use in GSEA? KEGG or Reactome?
+3) Use of latent factors with machine-learning to classify or predict or correlate with clinical outcomes... 
+4) An omics with many features will have more importance in the model (biased) --> Try to select the same number of features per omic --> or select the highest variable features. (subset of cpgs)
+5) Covariables in MOFA model are somehow split between omics? I.e. smoke is a covariable for methylation but not for gene expression?
+
+// Methylation:
+1) Get M values from beta2M or formula directly --> Alba uses the formula so I will continue using that 
+
+// Gene expression:
+1) Density plots; try to put labels so we can detect the sample that is wrong
+2) How to remove genes with low expression? LARA gmail
+3) target = Core or probeset? --> Target
+5) Control by batch effect? After RMA? Maybe use MDS or hierarchichal clustering to check first, then remove with Combat?
+"https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0017238" --> After RMA and Combat is the best
+"ComBat treats batch effects as additive and multiplicative effects. So it is basically a mixture of a mean-centering algorithm like PAMR, and a scale-based algorithm similar to Ratio G. This dual approach probably explains ComBat's superior overall performance."
+NOT NECESSARY, AS WE CAN PUT BATCH COVARIATES IN THE MOFA MODEL. BUT  Ideally, all undesired sources of variation should be removed a priori from the model.
+6) RMA is a between-sample normalization (Quantile-Normalization, to make data from different arrays comparable), 
+but what about within-sample normalization (make gene expression between genes comparable?) --> Seems that RMA makes log2 transformation, but...?
+7) Better method than RMA is --> "An alternative to this which also adjusts for the GC content, and how it affects probe-binding affinities, is called GC-RMA"
+8) Cross-table of batches-outcome (CVD) to look for good/bad experimental design
+
+DONE:
+
+// Methylation:
+[√] Download the data
+[√] Decrypt the data
+[√] Upload raw data to the cluster
+[√] understand what is GENIII and OFF_CCS --> Third generation and OFFspring Case-Control from exam 8.
+[√] Start with the Methylation QC
+[√] Look what kind of samples metadata data we need
+[√] Finish Methylation QC with subset example
+[√] Search for the samples metadata (CVD events etc) on the FHS folder (12GB) --> Not done, because I already have this data from Alba's files
+[√] Methylation QC with all 2620 samples
+[√] Remove X/Y chrs CpGs from M values matrix? --> Done for batch effect plots and SVA.
+[√] Remove samples metadata with NA's
+[√] SVA for Methylation --> Check why we only use 35.000 CpGs instead of 400.000 (It is correct to use the 35ks)
+[x] Batch effect plots for Methylation RERUN TO PUT TITLES
+
+// Gene expression:
+
+[x] Find a dataset with the same mRNA and methylation kits as the FHS to use the MOFA.
+[√] Download the data
+[√] Decrypt the data
+[√] Upload raw data to the cluster
+[√] Create an image for the Rstudio cluster for the gene expression data
+[√] Look what kind of samples metadata data we need
+[√] Start with the mRNA QC
+[√] Create samples metadata for gene expression data
+[√] Try singularity for the gene expression data
+[√] Remove samples metadata with NA's
+[√] Filtering: write a script to remove bad quality samples and low gene expressed genes
+[√] Run read_input with 100,200,300 individuals... and estimate RAM consumption
+[√] Continue writing mRNA pipeline on cluster
+[√] Use gene expression pipeline with the 1200 individuals already stored in the ExpressionSet object.
+[√] QC of the mRNA as Lara suggested: distribution of medians for every plot (NUSE, RLE, boxplot and MA); individuals with a median above 95% quantile 
+or below 5% quantile are considered suspicious. If the same sample is an outlier in minimum 2/4 plots, this sample is excluded. MA-plots were visualized 
+manually as median data cannot be extracted from the function value. I checked, one by one, that all outlier samples (90) are real outliers in their 
+respective plots
+[√] Use ComBat to remove batch effect and plot the MDS plot before the removal with a gradient legend.
+[√] Corrected the samples ordering to perform correctly the batch effect with comBat
+
+// MOFA:
+
+[√] Play with the MOFA example
+[√] Send email to Ricard (MOFA) to ask about how to reduce dimensionality in Methylation data
+[√] Begin MOFA pipeline
+[√] Create singularity image for MOFA packages. I used the original docker from the authors + added some packages
+[√] Remove ChrX/Y CpGs and innecessary covariates before creating the MOFA object
+[√] Train the MOFA object
+[√] Upload the image
+[ ] Perform The analysis
+    [√] Visualisation of factors
+        [√] Variance decomposition plot (how much does each factor explain)
+        [√] Check top 20 features for each factor and try to guess if there is a covariate (or not, meaning biological differences) that explain
+        the variability in that factor, i.e., CpGs related with age will mean that this specific factor may be explained because of age. NOTE: I
+        thought if I used covariates in the model I would not find factors associated with any of that covariates
+        [√] clustering of the factors colored by covariates and/or CVD
+        [√] Visualisation of combination of factors (more clustering)
+        [√] Correlation between factors and covariables
+    [ ] Visualisation of patterns in the data
+        [√] Heatmap of top features of all factors of all omics + color for samples
+        [√] Scatter plots of observations vs factor values. It is done for a given features of a specific factor of a specific omic
+        [√] Non-linear dimensionality reduction (TSNE) for all covariates
+        [ ] GSEA:
+            [√] GSEA --> Still need to obtain feature's metadata. Change ENSEMBLE ID's from Reactome Gene Set matrix to Affymetrix IDs.
+            [ ] Pick most expressed transcripts
+            [ ] Perform GSEA nogroups
+    [√] MOFA models with no covariables: MOFA does not use covariables, can't perform that.
+    [√] Obain factor values per individual and perform an average and median between CVD and no CVD people. T-test + U Man-Wittney.
+    [√] Check top 20 features in the interested factors (10 in groups, 12 in nogroups) and looked for differences between CVD and no CVD, 
+    using T-test and Mann-Whitney test. 
+    [√] Identify clusters on heatmap in these factors of interest, and check EWAS catalog + Affymetrix annotation
+    [√] Correlation between features from factors 10 and 12
+    [√] Features that overlap between factors 10 and 12
+    [√] Clustering plots of factors-covariable written in the cluster script (not in local)
+    [√] For the groups model, on factor 10, obtained a categorical variable that splits CVD group in two. Performed t-test (for continous variables) and
+    chi-square tests (categorical variables) between the obtained variable and covariables.
+    [√] T-test factor 10 (groups), 12 (nogroups) values from within CVD group vs CHD.
+    [√] T-test/chi-square tests CVD subgroups (only done in groups models) vs covariables (including CHD)
+[√] Removed mRNA batch 15 individuals (25) completely as they were clustering outside the rest of samples.
+
+
+1) Cox survival analysis factor 14 ajustando por factores de riesgo clásicos (Alba's code). Utilizar factores (en este caso factor 14) en modelo donde variable respuesta es tiempo hasta evento (cox)
+asociación entre Biomarcador y riesgo cardiovascular?
+    VARIABLES:
+        cvd
+        fecha inicio seguimiento
+        fecha final seguimiento (en los que haya hecho CVD = 1, fecha final seguimiento = fecha CVD)
+        fecha CVD
+        factores de riesgo en tiempo 0 (exam 8): age, sex, tot_chol, hdl_chol, sbp, dbp, glucose, smoke.
+        nuevos biomarcadores: factores 10,14,13. O expresión de cpgs aislados (individualmente), algun cpg representativo de las vías importantes del heatmap.
+    MODELOS:    
+        1) Incluye biomarcador, age y sex
+        2) biomarcador, age, sex y el resto de factores de riesgo.
+
+cvddate: This date corresponds to the date the participant had CVD or the date of censoring (last known date the participant did not have CVD).
+
+Gráfico Kaplan-Meier
+
+informacion predictiva adicional?
+criterio 1: mejora en la discriminación (capacidad de discriminar casos de no casos) mediante el uso del biomarcador?
+    Prob evento por invididuo, para diferentes puntos de corte --> sensibilidad y especificidad --> ROC curve (AUC), 1 perfecta, 0 horrible. Famingham ~0.7.
+
+Smoothie-Spline
+
+criterio 2: mejora en la reclasificación
+    tabla 3x3 (3 grupos: bajo, moderado, alto riesgo): una tabla sin biomarcador y otra con él.
+
+ 
+TO-DO:
+
+// Methylation:
+
+[ ] Obtain most variable CpGs (20.000-30.000). Four ways:
+    [√] 1) Obtain the most variable CpGs, ranked by SD.
+    [ ] 2) Perform an EWAS with CVD and obtain the CpGs with the lowest p-value [RUNNING: error after 2 weeks]
+    [ ] 3) Obtain DMRs (p-values)
+    [ ] 4) Merge CpGs from the same gene
+    [ ] 5) Select CpGs that we know are already related to CVD
+
+// Gene expression:
+
+[ ] Keep searching papers about mRNA QC that have used FHS if possible or at least the same mRNA Affymetrix kit
+[x] Can Oligo parallelize? Check it. Yes --> Waiting for Joan Marc.
+
+// MOFA:
+
+[ ] Imagen para cox regeression (hecho, falta probarla)
+[ ] smoke en 2 categorias para survival analysis
+[ ] % variance explained by selected features
+[ ] Modelo groups_914_2055 me da error en heatmap sólo en el factor 4.
+[ ] Pasarle pesos de los CpGs del factor asociado a CVD, a Alba.
+[ ] Batch effect plot for 1110 individuals (da error, quizas necesito cola fast)
+[ ] en survival analysis eliminar 4 outliers
+[ ] probar 30 factores y converge  = "long"
+[ ] TSNE color by factors? WHERE IS THE PARAMETER. Or check the cluster from the factor 2 (nogroups_914_2055), i.e., plot factor 2 by batch
+
+Others 
+
+[ ] Correlation between factor 1 (nogroups_914_2055) and median intensity of mRNA for each sample
+[ ] Check smoke
+    [ ] List of CpGs associated with smoke. Are they in our dataset, so MOFA can find them?
+    [ ] QC: train 50 factors with only methylation. One factor should be smoke
+
+SLACK --> comentarle a Ricard por Slack lo del cluster del modelo 914_2055
+
+
+To ask:
+1) Corregir por comparaciones multiples en cov vs cvd / features vs factor?
+2) Because MOFA uses a heuristic algorithm, we assessed the robustness of the results using 20 MOFA runs. 
+For each analysis, we selected the MOFA run that resulted in the best convergence, based on the evidence lower bound statistic (ELBO).
+
+Meeting with Ricard Argelaguet (MOFA's author):
+
+1) Objetivo estudio --> Integrar metilación y transcripción y analizar su relación con aparición de enfermedad cardiovascular. Metodología: datos del
+estudio de Framingham (USA), visita 8 con seguimiento de 6-7 años y tienen datos de ambas omicas. 
+Metilación 2620 
+Transcriptomica: 1892
+~1540 son comunes entre ambos
+
+2) Servidor RAM sólo para 1200 de transcriptomica.
+
+3) QC
+Transcriptomica: batch effect claro --> comBat para eliminarlo (había efecto batch en MDS plot y en MOFA)
+Después de QC -->
+Metilación: 2055, 
+Transcriptomica: 1110
+914 son comunes entre ambos
+
+4) Dos tipos de modelos MOFA
+914_2055 tanto para grupos como no grupos
+914_914:tanto para grupos como no grupos
+Modelos de grupos, valen la pena? Qué mirar
+
+5) Observaciones resultados
+
+No sabemos como interpretar estos resultados
+Enseñar 938_938 para que vea el cluster
+
+5.1) Varianza explicada for cada omicas
+5.2) Violin/PCA plot para cada factor
+5.3) Correlacion factor-covariables
+5.4) TSNE
+
+Luego enseñar lo mismo con modelo nogrupos 914 y 2055. En 914 se arregla el problema del cluster, pero en 2055 tenemos un cluster de los missing data.
+
+914_914: ya no observamos el cluster del batch 15 raro
+914_2055: observamos que los que tienen missing de transcriptomica se agrupan con los del batch 15 (y el factor depende de metilación) 
+y nos salen muy separados del resto
+
+6) Crear un factor de interés (el 13 en nuestro caso) a partir de los pesos de los atributos para validarlo en otra base de datos.
+Mirar en muestras de REGICOR/WOMANS si se asocia a coronario/vascular (validation set)
+Necesito weigths de cada feature y crear el nuevo factor a partir de estos weights.
+
+X) Because MOFA uses a heuristic algorithm, we assessed the robustness of the results using 20 MOFA runs. 
+
+My things:
+
+1) Obtener top 50 features meth/mrna heatmap y ver donde pierdo significacion al hacer t-test feature vs factor.
+2) Hacer cox, survival, etc, con un feature específico (mirar de coger los top 100) en vez del factor, usando su valor de expresión?
+
+X) Run MOFA again with the new 4 models (corrected by mRNA_batch, removed batch 15 samples and chrX/Y genes from mRNA)
+
+[ ] Modelo 914 nogroups
+    [√] MOFA object
+    [x] MOFA trained
+    [ ] Variance decomposition:
+        [ ] Factor-Covariables plots depending on factor-covariables correlation
+        [ ] Heatmap features annotation
+    [ ] Statistical tests
+        [ ] t-test and Mann-Whitney all factors (specially factor 14) values vs CVD
+        [ ] t-tests and Mann-Whitney heatmap features from Factor 14 vs CVD
+        [ ] Correlation between heatmap features from Factor 14
+        [ ] t-test/chi-square covariables (including CHD) vs CVD subgroups
+        [ ] t-test and Mann-Whitney all factors (specially factor 14) vs CHD within CVD group
+    [ ] Survival analysis
+[ ] Modelo 914 groups
+    [√] MOFA object 
+    [x] MOFA trained 
+    [ ] Variance decomposition:
+        [ ] Factor-Covariables plots depending on factor-covariables correlation
+        [ ] Heatmap features annotation
+    [ ] Statistical tests
+        [ ] t-test and Mann-Whitney all factors (specially factor 10) values vs CVD
+        [ ] t-tests and Mann-Whitney heatmap features from Factor 10 vs CVD
+        [ ] Correlation between heatmap features from Factor 10
+        [ ] t-test/chi-square covariables (including CHD) vs CVD subgroups
+        [ ] t-test and Mann-Whitney all factors (specially factor 10) vs CHD within CVD group
+[ ] Modelo 914_2055 nogroups
+    [√] MOFA object
+    [x] MOFA trained
+    [ ] Variance decomposition
+        [ ] Factor-Covariables plots depending on factor-covariables correlation
+        [ ] Heatmap features annotation
+    [ ] Statistical tests
+        [ ] t-test and Mann-Whitney all factors (specially factor 12) values vs CVD
+        [ ] t-tests and Mann-Whitney heatmap features from Factor 12 vs CVD
+        [ ] Correlation between heatmap features from Factor 12
+        [x] t-test/chi-square covariables (including CHD) vs CVD subgroups [THERE IS NO SUCH GROUP]
+        [ ] t-test and Mann-Whitney all factors (specially factor 12) vs CHD within CVD group
+    [ ] Survival analysis
+[ ] Modelo 914_2055 groups
+    [√] MOFA object
+    [x] MOFA trained
+    [ ] Variance decomposition !error on factor 4 for heatmap!
+        [ ] Factor-Covariables plots depending on factor-covariables correlation
+        [ ] Heatmap features annotation (factor 10 es el mismo que el 12 )
+    [ ] Statistical tests
+        [ ] t-test and Mann-Whitney all factors (specially factor 10) values vs CVD
+        [ ] t-tests and Mann-Whitney heatmap features from Factor 10,6,7 vs CVD
+        [ ] Correlation between heatmap features from Factor 10
+        [ ] t-test/chi-square covariables (including CHD) vs CVD subgroups
+        [ ] t-test and Mann-Whitney all factors (specially factor 10) vs CHD within CVD group
+
+MANUSCRIPT:
+
+Results:
+
+Steps
+
+1) Flowchart de QC tanto de muestras como features
+2) Tablar características casos y no casos. Variables del modelo supervivencia y abajo cuantos tienesde metilación y transcriptomica
+3) Violin/PCA de los 15 factores
+4) Plot correlation 15 factores vs covariables
+5) Heatmap
+6) Algun factor diferente entre casos y no casos? Factor 13
+7) Analisis de supervivencia: tabla con únicamente factor 13 para los 3 modelos ajustados (col: coef, sd(coeff), HR, CI95, p-val; rows: modelo1, modelo2, modelo3)
+en la misma tabla, apartado B, mejora en la discriminación y reclasificación.
+
+supp:
+
+1) PCA plot factor 13, con y sin los 4 outliers
+
+[ ] Obtain values from correlations, % variance explained, etc, from the plots
+[ ] Flowchart of QC for both, batch and methylation
+[ ] Table for covariates and clinical outcome CVD for 914 and 2055
+[ ] Annotation table for CpGs
+
+Methods:
+
+
+
+PROBLEMS OR QUESTIONS:
+
+// General:
+
+1) Pasar todo a /projects2 ??? (tiene 7T de espacio). Usar df -v 
+2) What about the 512 GB RAM?
+
+// Methylation:
+
+// Gene expression:
+
+// MOFA:
+
+
+1) GSEA:
+    4.1) 20602 transcripts in MOFA model --> 18049 transcripts with annotation to GenBank ID --> 16909 unique transcripts annotated only to 1 gene (1140)
+    --> 14842 transcripts annotated to gene sets from REACTOME database. Perform GSEA with these transcripts. MOFA removes the features from the MODEL that
+    do not match with the transcripts from the REACTOME database, thus questions: 
+        4.1.1) As several transcripts are associated to the same gene (1140), what criteria to follow to extract only 1 transcript representative of a gene?
+        4.1.2) would it be better to train the MOFA model only using the 14842 transcripts from the beginning?
+
+    4.2) Using all genes? or only those DE?
+
+2) Models with 50ks CpGs? More than 15 factors?
+
+Not working:
+1) Scatter plots
+
+Models that could be done:
+
+[√] Using groups (CVD) and using covariates
+[√] NOT using groups (CVD) and using covariates
+
+
+Others:
+
+1) Relative degree + ethnicity --> PCA of genomic data and obtain PC 1-10 as covariates
+2) Bootstrap strategy to avoid overfitting of MOFA model.
+
+
+
+
+
