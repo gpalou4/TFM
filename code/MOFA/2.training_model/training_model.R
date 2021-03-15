@@ -21,7 +21,7 @@ getwd()
 
 cat("\n\n... 1) LOADING MOFA OBJECT ...\n\n", file = stdout())
 
-MOFAobject.name <- load("MOFA/1.create_mofa_object/MOFAobject_groups_914.RData")
+MOFAobject.name <- load("MOFA/1.create_mofa_object/bootstrap/MOFAobject_ewas_bootstrap_nogroups_914_2055.RData")
 MOFAobject <- get(MOFAobject.name)
 cat("\n\n // MOFAobject //\n", file = stdout())
 MOFAobject
@@ -115,7 +115,7 @@ reticulate::py_discover_config("mofapy2")
 
 cat("\n\n... 6) TRAIN THE MOFA OBJECT ...\n\n", file = stdout())
 
-outfile = "MOFA/2.training_model/MOFA_trained_groups_914.hdf5"
+outfile = "MOFA/2.training_model/MOFA_trained_ewas_bootstrap_nogroups_914_2055.hdf5"
 MOFAobject.trained <- run_mofa(MOFAobject, outfile)
 
 date()

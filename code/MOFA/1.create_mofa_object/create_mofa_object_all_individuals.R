@@ -222,18 +222,33 @@ cat("\n// M values XY filtered //\n", file = stdout())
 M.matrix.subset.filt.XY[1:5,1:5]
 dim(M.matrix.subset.filt.XY)
 
-cat("\n\n... 6.2) LOADING THE LIST WITH THE 20.000 MOST VARIABLE CPGS AND SUBSETTING THEM ...\n\n", file = stdout())
+# cat("\n\n... 6.2) LOADING THE LIST WITH THE 20.000 MOST VARIABLE CPGS AND SUBSETTING THEM ...\n\n", file = stdout())
 
-cpgs.sd.name <- load("methylation/QC/10.reducing_dimensions/SD/cpgs_SD_ranked.RData")
-cpgs.sd <- get(cpgs.sd.name)
-cat("\n\n // CpGs ranked by SD //\n", file = stdout())
-length(cpgs.sd)
+# cpgs.sd.name <- load("methylation/QC/10.reducing_dimensions/SD/cpgs_SD_ranked.RData")
+# cpgs.sd <- get(cpgs.sd.name)
+# cat("\n\n // CpGs ranked by SD //\n", file = stdout())
+# length(cpgs.sd)
+# cat("\nTop 5\n", file = stdout())
+# cpgs.sd[1:5]
+# cat("\nLast 5\n", file = stdout())
+# cpgs.sd[19996:20000]
+# cat("\n// M values SD filtered //\n", file = stdout())
+# M.matrix.subset.filt.XY.sd <- M.matrix.subset.filt.XY[rownames(M.matrix.subset.filt.XY)%in%names(cpgs.sd),]
+# M.matrix.subset.filt.XY.sd[1:5,1:5]
+# dim(M.matrix.subset.filt.XY.sd)
+
+
+cat("\n\n... 6.2) LOADING THE LIST WITH THE 20.000 MOST SIGNIFICANT CPGS FROM EWAS ...\n\n", file = stdout())
+
+ewas.cpgs <- read.csv(file = "ewas_fos.csv", header=TRUE, stringsAsFactors = F, sep=";")
+cat("\n\n // EWAS CpGs ranked by p-value //\n", file = stdout())
+dim(ewas.cpgs)
 cat("\nTop 5\n", file = stdout())
-cpgs.sd[1:5]
+head(ewas.cpgs)
 cat("\nLast 5\n", file = stdout())
-cpgs.sd[19996:20000]
+tail(ewas.cpgs)
 cat("\n// M values SD filtered //\n", file = stdout())
-M.matrix.subset.filt.XY.sd <- M.matrix.subset.filt.XY[rownames(M.matrix.subset.filt.XY)%in%names(cpgs.sd),]
+M.matrix.subset.filt.XY.sd <- M.matrix.subset.filt.XY[rownames(M.matrix.subset.filt.XY)%in%ewas.cpgs$CpG[1:22669],]
 M.matrix.subset.filt.XY.sd[1:5,1:5]
 dim(M.matrix.subset.filt.XY.sd)
 
@@ -380,13 +395,13 @@ print(MOFAobject)
 # table(MOFAobject@samples_metadata$sample[1:217]%in%MOFA.covariates.order[MOFA.covariates.order$cvd == 1,"shareid"])
 
 cat("\n\n Plot overview of training Data \n", file = stdout())
-png(paste("MOFA/1.create_mofa_object/data_overview_",groups,"_",samples,".png", sep = ""), height=3600, width=6000, res=600, units="px")
+png(paste("MOFA/1.create_mofa_object/data_overview_ewas_",groups,"_",samples,".png", sep = ""), height=3600, width=6000, res=600, units="px")
 plot_data_overview(MOFAobject)
 dev.off()
 
 cat("\n\n ... SAVING MOFA OBJECT ... \n\n", file = stdout())
 
-save(MOFAobject, file = paste("MOFA/1.create_mofa_object/MOFAobject_",groups,"_",samples,".RData", sep = ""))
+save(MOFAobject, file = paste("MOFA/1.create_mofa_object/MOFAobject_ewas_",groups,"_",samples,".RData", sep = ""))
 
 date()
 
