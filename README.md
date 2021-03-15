@@ -16,8 +16,18 @@ these data to identify biomarkers related to the risk of presenting a cardiovasc
 
 This repository contains three folders:
 
--Code --> All the R code used for the quality control of the data, MOFA integration and statistical / prediction analysis.
+-***Code** --> All the R code used for the quality control of the data, MOFA integration and statistical / prediction analysis.
 
--Manuscript --> Supplementary material of the manuscript
+-**Manuscript** --> Supplementary material of the manuscript
 
--Notes --> Weekly Notebook (not updated) for progress reviews. Started on 11/12/2019
+-**Notes** --> Weekly Notebook (not updated) for progress reviews. Started on 11/12/2019
+
+# Code 
+
+The _Code_ folder is divided in the following structure:
+
+-QC: 
+    -gene_expression
+    -methylation
+    
+    
