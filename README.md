@@ -15,5 +15,9 @@ these data to identify biomarkers related to the risk of presenting a cardiovasc
 # Repository organization
 
 This repository contains three folders:
--Code
--Manuscript
+
+-Code --> All the R code used for the quality control of the data, MOFA integration and statistical / prediction analysis.
+
+-Manuscript --> Supplementary material of the manuscript
+
+-Notes --> Weekly Notebook (not updated) for progress reviews. Started on 11/12/2019
