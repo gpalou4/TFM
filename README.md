@@ -16,7 +16,7 @@ these data to identify biomarkers related to the risk of presenting a cardiovasc
 
 This repository contains three folders:
 
--***Code** --> All the R code used for the quality control of the data, MOFA integration and statistical / prediction analysis.
+-**Code** --> All the R code used for the quality control of the data, MOFA integration and statistical / prediction analysis.
 
 -**Manuscript** --> Supplementary material of the manuscript
 
@@ -53,4 +53,29 @@ Quality control for both omics data. For a more detailed and visual overview che
         
         -SD --> Selecting the top 20.000 CpGs with highest variability using standard deviation.
     
-    
+## 2. MOFA
+
+MOFA integration analysis of the two omic layers: gene expression and DNA methylation.
+
+-   _create_mofa_object_:  
+
+    1. Rea.
+    2. Vis
+
+-   _training_model_: Qua
+
+    1. Reading .
+    2. Vis
+    3. 
+
+-   _downstream_analysis_: Qua
+
+    1. Readiiles.
+    2. Vis
+
+-   _samples_covariates_: Qual
+
+    1. Readi
+    2. Vis
+
+
