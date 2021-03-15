@@ -26,8 +26,10 @@ This repository contains three folders:
 
 The _Code_ folder is divided in the following structure:
 
--QC: 
-    -gene_expression
-    -methylation
+## QC:
+
+-   gene_expression
+
+-   methylation
     
     
