@@ -26,9 +26,15 @@ This repository contains three folders:
 
 The _Code_ folder is divided in the following structure:
 
-## QC:
+## 1. QC:
 
--   gene_expression
+-   gene_expression: Quality control for the gene expression data. Steps performed: 
+
+    -   1. Reading the input files.
+    -   2. Visualizing several plots (NUSE, RLE, MA, boxplots and density plots) for sample filtering.
+    -   3. Normalization with `oligo` package.
+    -   4. Redoing the plots with the normalized data.
+    -   5. Filtering low-expressed genes.
 
 -   methylation
     
