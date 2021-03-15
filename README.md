@@ -28,15 +28,27 @@ The _Code_ folder is divided in the following structure:
 
 ## 1. QC:
 
--   gene_expression: Quality control for the gene expression data. Steps performed: 
+Quality control for both omics data. For a more detailed and visual overview check the supplementary figure S1 (for methylation) and S2 (for gene expression), provided in the *Manuscript* folder.
+
+-   _gene_expression_: Quality control for the gene expression data. Steps performed: 
 
     1. Reading the input files.
     2. Visualizing several plots (NUSE, RLE, MA, boxplots and density plots) for sample filtering.
     3. Normalization with `oligo` package.
     4. Redoing the plots with the normalized data.
     5. Filtering low-expressed genes.
-    6. Batch effect removal with `comBat`
+    6. Batch effect check with MDS plot and removal with `comBat`
 
--   methylation
+-   _methylation_: Quality control for the methylation data. Steps performed: 
+
+    1. Reading the input files.
+    2. Filtering of bad quality probes/samples and cross-reactive probes using `Minfi` package.
+    3. Sex control , removing samples with a different matched-reported sex. M-values determination
+    4. Normalization with `Dasen` package, removal of outliers CpGs and Blood Cell count with `FlowSorted.Blood.450k` package.
+    5. Batch effect check with MDS plot.
+    6. Identification of one surrogate variable via `SVA` package.
+    7. Reducing dimensions of the methylation matrix with two strategies:
+        7.1. EWAS --> Selecting the top 20.000 CpGs with lowest p-value in association with CVD (EWAS).
+        7.2. SD --> Selecting the top 20.000 CpGs with highest variability using standard deviation.
     
     
