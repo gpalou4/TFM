@@ -1,9 +1,9 @@
 # Introduction
-This is the repository for the manuscript "DNA methylation and gene expression integration in cardiovascular disease"
+This is the repository for the manuscript *"DNA methylation and gene expression integration in cardiovascular disease"*
 
 Authors: Guillermo Palou Márquez, Isaac Subirana, Lara Nonell, Alba Fernández-Sanlés, Roberto Elosua
 
-Abstract:
+**Abstract**:
 
 *Background:* The integration of different layers of omics information is an opportunity to tackle the complexity of cardiovascular diseases (CVD) and to identify new predictive biomarkers and potential therapeutic targets. Our aim was to integrate DNA methylation and gene expression data in an effort to identify biomarkers related to cardiovascular disease risk in a community-based population. We accessed data from the Framingham Offspring Study, a cohort study with data on DNA methylation (Infinium HumanMethylation450 BeadChip; Illumina) and gene expression (Human Exon 1.0 ST Array; Affymetrix). Using the MOFA2 R package, we integrated
 these data to identify biomarkers related to the risk of presenting a cardiovascular event.
@@ -14,3 +14,6 @@ these data to identify biomarkers related to the risk of presenting a cardiovasc
 
 # Repository organization
 
+This repository contains three folders:
+-Code
+-Manuscript
