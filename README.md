@@ -48,7 +48,9 @@ Quality control for both omics data. For a more detailed and visual overview che
     5. Batch effect check with MDS plot.
     6. Identification of one surrogate variable via `SVA` package.
     7. Reducing dimensions of the methylation matrix with two strategies:
+ 
         -EWAS --> Selecting the top 20.000 CpGs with lowest p-value in association with CVD (EWAS).
+        
         -SD --> Selecting the top 20.000 CpGs with highest variability using standard deviation.
     
     
