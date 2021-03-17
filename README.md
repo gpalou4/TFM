@@ -61,19 +61,27 @@ MOFA integration analysis of the two omic layers (gene expression and DNA methyl
 
 -   _training_model_: Training of the model with previously build MOFA object.
 
-    1. training_model.R --> Main analysis
+    1. training_model.R --> Training model of the main analysis
     2. REGICOR_validation/training_model.R --> Replication analysis in the independent cohort REGICOR.
 
--   _downstream_analysis_: Qua
+-   _downstream_analysis_: Main analysis, including variance decomposition of the identified latent factors, statistical analysis and prediction improvement. 
 
-    1. ewas_nogroups_914_2055 --> 
+    1. ewas_nogroups_914_2055 --> Main analysis (explained in the next section in more detail)
     2. MOFA_samples_metadata_nogroups_914_2055.csv --> Samples metadata for the main analysis
     3. REGICOR_validation --> Same analysis but for the replication in REGICOR
     4. cpgs_shared.R --> Calculation of the number of CpGs shared between the EWAS (main) and the SD (sensitivity) strategies.
 
--   _samples_covariates_: Qual
+-   _samples_covariates_: Different samples metadata files for different steps of the analysis
 
-    1. Readi
-    2. Vis
+### 2.1 Main analysis
+
+Found in MOFA/downstream_analysis/ewas_nogroups_914_2055. We have three folders:
+
+- 1) variance_decomposition --> It includes the following: correlation between factors and covariates; correlation between factors; variance explained by each omic and factor; individual or grouped violin plots for all factors; feature weights (from both omics) for all factors; heatmaps only for the interesting factors; scatterplots (for quantitative variables) or boxplots (for qualitative variables) of factors vs covariates; TSNE of all individuals colored by different covariates.
+The different resulting plots are either on the same folder or on their respective folders.
+
+-
+
+-
 
 
