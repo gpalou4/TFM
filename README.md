@@ -55,23 +55,21 @@ Quality control for both omics data. For a more detailed and visual overview che
     
 ## 2. MOFA
 
-MOFA integration analysis of the two omic layers: gene expression and DNA methylation.
+MOFA integration analysis of the two omic layers (gene expression and DNA methylation) using `MOFA2` R package.
 
--   _create_mofa_object_:  
+-   _create_mofa_object_: Integrating both Omic datasets and the samples covariates into a MOFA object
 
-    1. Rea.
-    2. Vis
+-   _training_model_: Training of the model with previously build MOFA object.
 
--   _training_model_: Qua
-
-    1. Reading .
-    2. Vis
-    3. 
+    1. training_model.R --> Main analysis
+    2. REGICOR_validation/training_model.R --> Replication analysis in the independent cohort REGICOR.
 
 -   _downstream_analysis_: Qua
 
-    1. Readiiles.
-    2. Vis
+    1. ewas_nogroups_914_2055 --> 
+    2. MOFA_samples_metadata_nogroups_914_2055.csv --> Samples metadata for the main analysis
+    3. REGICOR_validation --> Same analysis but for the replication in REGICOR
+    4. cpgs_shared.R --> Calculation of the number of CpGs shared between the EWAS (main) and the SD (sensitivity) strategies.
 
 -   _samples_covariates_: Qual
 
