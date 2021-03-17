@@ -3,6 +3,21 @@ This is the repository for the manuscript *"DNA methylation and gene expression 
 
 Authors: Guillermo Palou Márquez, Isaac Subirana, Lara Nonell, Alba Fernández-Sanlés, Roberto Elosua
 
+Guillermo Palou-Márquez 1,2,3 , Isaac Subirana 1,4 , Lara Nonell 5 , Alba Fernández-Sanlés 1,6 † , Roberto Elosua 1,7,8 †
+
+1 Cardiovascular Epidemiology and Genetics Research Group, REGICOR Study group, Hospital
+del Mar Medical Research Institute (IMIM), Barcelona, Spain.
+2 Pompeu Fabra University (UPF), Barcelona, Spain.
+3 Institute for Research in Biomedicine (IRB Barcelona), The Barcelona Institute of Science and
+Technology, Barcelona, Spain
+4 CIBER Epidemiology and Public Health (CIBERESP), Spain.
+5 MARGenomics, Hospital del Mar Medical Research Institute (IMIM), Barcelona, Spain,
+6 MRC Integrative Epidemiology Unit at the University of Bristol, Bristol, UK
+7 CIBER Cardiovascular Diseases (CIBERCV), Spain.
+8 Medicine Department, Medical School, University of Vic-Central University of Catalonia (UVic-
+UCC), Vic, Spain.
+† These two authors equally contributed to this work.
+
 **Abstract**:
 
 *Background:* The integration of different layers of omics information is an opportunity to tackle the complexity of cardiovascular diseases (CVD) and to identify new predictive biomarkers and potential therapeutic targets. Our aim was to integrate DNA methylation and gene expression data in an effort to identify biomarkers related to cardiovascular disease risk in a community-based population. We accessed data from the Framingham Offspring Study, a cohort study with data on DNA methylation (Infinium HumanMethylation450 BeadChip; Illumina) and gene expression (Human Exon 1.0 ST Array; Affymetrix). Using the MOFA2 R package, we integrated
