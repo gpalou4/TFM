@@ -62,29 +62,30 @@ MOFA integration analysis of the two omic layers (gene expression and DNA methyl
 -   _training_model_: Training of the model with previously build MOFA object.
 
     1. training_model.R --> Training model of the main analysis
-    2. REGICOR_validation/training_model.R --> Replication analysis in the independent cohort REGICOR.
+    2. _REGICOR_validation_/training_model.R --> Replication analysis in the independent cohort REGICOR.
 
 -   _downstream_analysis_: Main analysis, including variance decomposition of the identified latent factors, statistical analysis and prediction improvement. 
 
-    1. ewas_nogroups_914_2055 --> Main analysis (explained in the next section in more detail)
+    1. _ewas_nogroups_914_2055_ --> Main analysis (explained in the next section in more detail)
     2. MOFA_samples_metadata_nogroups_914_2055.csv --> Samples metadata for the main analysis
-    3. REGICOR_validation --> Same analysis but for the replication in REGICOR
+    3. _REGICOR_validation_ --> Same analysis but for the replication in REGICOR
     4. cpgs_shared.R --> Calculation of the number of CpGs shared between the EWAS (main) and the SD (sensitivity) strategies.
 
 -   _samples_covariates_: Different samples metadata files for different steps of the analysis
 
 ### 2.1 Main analysis
 
-Found in MOFA/downstream_analysis/ewas_nogroups_914_2055. We have three folders:
+Found in _MOFA/downstream_analysis/ewas_nogroups_914_2055_. We have three folders:
 
-- 1) variance_decomposition --> It includes the following: correlation between factors and covariates; correlation between factors; variance explained by each omic and factor; individual or grouped violin plots for all factors; feature weights (from both omics) for all factors; heatmaps only for the interesting factors; scatterplots (for quantitative variables) or boxplots (for qualitative variables) of factors vs covariates; TSNE of all individuals colored by different covariates.
+- 1) _variance_decomposition_: It includes the following: correlation between factors and covariates; correlation between factors; variance explained by each omic and factor; individual or grouped violin plots for all factors; feature weights (from both omics) for all factors; heatmaps only for the interesting factors; scatterplots (for quantitative variables) or boxplots (for qualitative variables) of factors vs covariates; TSNE of all individuals colored by different covariates.
 The different resulting plots are either on the same folder or on their respective folders.
 
-- 2) statistical_tests --> It includes the following: t-tests and Mann-Whitney tests for all factors vs CVD (factors_cvd_tests.csv) and CHD incidence (factors_chd_tests.csv); T-test (heatmap_features_T_tests.csv) or cox regression (heatmap_features_cox_regression.csv) for the top 30 CpGs leading the heatmaps using CVD as outcome and adjusted by cell type proportions and one surrogate variable; simple histograms (factors_histograms) and boxplots (factors_boxplots) for all factors vs CVD; simple histograms (features_histograms) and boxplots (features_boxplots) for the top 30 features of the interested factors plus their correlations (features_correlations).
+- 2) _statistical_tests_: It includes the following: t-tests and Mann-Whitney tests for all factors vs CVD (factors_cvd_tests.csv) and CHD incidence (factors_chd_tests.csv); T-test (heatmap_features_T_tests.csv) or cox regression (heatmap_features_cox_regression.csv) for the top 30 CpGs leading the heatmaps using CVD as outcome and adjusted by cell type proportions and one surrogate variable; simple histograms (factors_histograms) and boxplots (factors_boxplots) for all factors vs CVD; simple histograms (features_histograms) and boxplots (features_boxplots) for the top 30 features of the interested factors plus their correlations (features_correlations).
 
-
-- T-TEST AND MANN-WHITNEY TEST FOR INTERESTED FACTORS
-
--
+- 3) _prediction_: It includes the following:
+    1. Cox regression (discrimination analysis) --> Done for all the factors with the `survival` R package for either CVD (cox_results_cvd.csv) or CHD (cox_results_chd.csv).
+    2. NRI and clinical NRI (reclassification analysis) --> Done for the significantly associated factors with the `Hmisc` R package. Results can be found in the _results_reclassication_ folder.
+    3. Kaplan meier plots for the interesting factors.
+    4. _factor_cov_ --> It includes the samples metadata including the factor values, separately for each factor (temp files just to speed the analyses).
 
 
