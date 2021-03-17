@@ -80,7 +80,10 @@ Found in MOFA/downstream_analysis/ewas_nogroups_914_2055. We have three folders:
 - 1) variance_decomposition --> It includes the following: correlation between factors and covariates; correlation between factors; variance explained by each omic and factor; individual or grouped violin plots for all factors; feature weights (from both omics) for all factors; heatmaps only for the interesting factors; scatterplots (for quantitative variables) or boxplots (for qualitative variables) of factors vs covariates; TSNE of all individuals colored by different covariates.
 The different resulting plots are either on the same folder or on their respective folders.
 
--
+- 2) statistical_tests --> It includes the following: t-tests and Mann-Whitney tests for all factors vs CVD (factors_cvd_tests.csv) and CHD incidence (factors_chd_tests.csv); T-test (heatmap_features_T_tests.csv) or cox regression (heatmap_features_cox_regression.csv) for the top 30 CpGs leading the heatmaps using CVD as outcome and adjusted by cell type proportions and one surrogate variable; simple histograms (factors_histograms) and boxplots (factors_boxplots) for all factors vs CVD; simple histograms (features_histograms) and boxplots (features_boxplots) for the top 30 features of the interested factors plus their correlations (features_correlations).
+
+
+- T-TEST AND MANN-WHITNEY TEST FOR INTERESTED FACTORS
 
 -
 
