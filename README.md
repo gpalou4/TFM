@@ -1,21 +1,24 @@
 # Introduction
 This is the repository for the manuscript *"DNA methylation and gene expression integration in cardiovascular disease"*
 
-Authors: Guillermo Palou Márquez, Isaac Subirana, Lara Nonell, Alba Fernández-Sanlés, Roberto Elosua
+Authors: Guillermo Palou-Márquez ¹²³, Isaac Subirana ¹⁴, Lara Nonell⁵, Alba Fernández-Sanlés ¹⁶†, Roberto Elosua ¹⁷⁸ †
 
-Guillermo Palou-Márquez 1,2,3 , Isaac Subirana 1,4 , Lara Nonell 5 , Alba Fernández-Sanlés 1,6 † , Roberto Elosua 1,7,8 †
+1 Cardiovascular Epidemiology and Genetics Research Group, REGICOR Study group, Hospital del Mar Medical Research Institute (IMIM), Barcelona, Spain.
 
-1 Cardiovascular Epidemiology and Genetics Research Group, REGICOR Study group, Hospital
-del Mar Medical Research Institute (IMIM), Barcelona, Spain.
 2 Pompeu Fabra University (UPF), Barcelona, Spain.
-3 Institute for Research in Biomedicine (IRB Barcelona), The Barcelona Institute of Science and
-Technology, Barcelona, Spain
+
+3 Institute for Research in Biomedicine (IRB Barcelona), The Barcelona Institute of Science and Technology, Barcelona, Spain.
+
 4 CIBER Epidemiology and Public Health (CIBERESP), Spain.
-5 MARGenomics, Hospital del Mar Medical Research Institute (IMIM), Barcelona, Spain,
-6 MRC Integrative Epidemiology Unit at the University of Bristol, Bristol, UK
+
+5 MARGenomics, Hospital del Mar Medical Research Institute (IMIM), Barcelona, Spain.
+
+6 MRC Integrative Epidemiology Unit at the University of Bristol, Bristol, UK.
+
 7 CIBER Cardiovascular Diseases (CIBERCV), Spain.
-8 Medicine Department, Medical School, University of Vic-Central University of Catalonia (UVic-
-UCC), Vic, Spain.
+
+8 Medicine Department, Medical School, University of Vic-Central University of Catalonia (UVic-UCC), Vic, Spain.
+
 † These two authors equally contributed to this work.
 
 **Abstract**:
